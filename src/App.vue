@@ -1,30 +1,66 @@
+
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <div class="container">
+      <router-view />
+      <van-tabbar v-model="active" v-show='$route.meta.showTabbar' fixed="true">
+        <van-tabbar-item
+          icon="home-o"
+          to='/'
+        >首页</van-tabbar-item>
+        <van-tabbar-item
+          icon="bag-o"
+          to='/classify'
+        >分类</van-tabbar-item>
+        <van-tabbar-item to='/car'>
+          <van-action-bar-icon
+            icon="shopping-cart-o"
+            text="购物车"
+            badge="5"
+          />
+        </van-tabbar-item>
+        <van-tabbar-item
+          icon="friends-o"
+          to='/personal'
+        >个人中心</van-tabbar-item>
+      </van-tabbar>
+    </div>
   </div>
-  <router-view/>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style lang="less" >
+* {
+  margin: 0px;
+  padding: 0px;
 }
+.container {
+  
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  .van-tabbar-item--active {
+    background: #eee;
+    .van-action-bar-icon {
+      color: rgba(12, 168, 177, 0.801);
+      background-color: transparent;
+      .van-icon-shopping-cart-o {
+        color: rgba(12, 168, 177, 0.801);
+      }
     }
   }
 }
 </style>
+
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+  setup() {
+    const active = ref(0);
+    return { active };
+  },
+  name: "Home",
+  components: {},
+});
+</script>
+
+
+
