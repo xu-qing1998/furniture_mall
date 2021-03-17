@@ -3,7 +3,7 @@
   <div>
     <div class="container">
       <router-view />
-      <van-tabbar v-model="active" v-show='$route.meta.showTabbar' fixed="true">
+      <van-tabbar v-model="active" v-show='$route.meta.showTabbar' fixed="true" placeholder="true" >
         <van-tabbar-item
           icon="home-o"
           to='/'
@@ -16,7 +16,6 @@
           <van-action-bar-icon
             icon="shopping-cart-o"
             text="购物车"
-            badge="5"
           />
         </van-tabbar-item>
         <van-tabbar-item
@@ -35,7 +34,9 @@
 }
 .container {
   
-
+ /deep/ .van-tabbar--fixed {
+    z-index: 999;
+}
   .van-tabbar-item--active {
     background: #eee;
     .van-action-bar-icon {

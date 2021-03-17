@@ -34,6 +34,12 @@ export default {
     props: {
     goodsList: [],
   },
+  setup(props){
+    const ss=()=>{
+      console.log(props.goodsList,"kkkkkkkkkkkk")
+    }
+    ss();
+  }
 
     
 }

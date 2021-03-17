@@ -1,6 +1,7 @@
 <template>
   <div class="continer">
-    <van-nav-bar fixed><template #title>
+    <van-nav-bar fixed left-arrow
+  @click-left="onClickLeft"><template #title>
         {{goodsInfo.title}}
       </template>
     </van-nav-bar>
@@ -46,7 +47,7 @@
       class="second"
       v-if="goodsInfo.ranking>0"
     >
-      <div>
+      <div @click="toHot">
         <img src="../assets/火.png" />
         <span class="desc">店铺商品热榜排行第{{goodsInfo.ranking}}名</span>
       </div>
@@ -98,12 +99,42 @@
     </van-popup>
 
     <div class="third big">
-      <div class="box">
+      <div
+        class="box"
+        @click="showPopup2"
+      >
         <span class="left">选择</span>
         <span>款式</span>
+        <div class="kuanshi">
+          <van-grid
+            :border="false"
+            :column-num="newList.length"
+          >
+            <van-grid-item
+              v-for='item in newList'
+              :key="item.id"
+            >
+              <van-image :src="item.imgUrl" />
+            </van-grid-item>
+          </van-grid>
+          <div class="sign">
+            <div class="text">共有{{newList.length}}种款式可选</div>
+          </div>
+        </div>
       </div>
       <van-icon name="arrow" />
-
+      <van-popup
+        v-model:show="show2"
+        round
+        position="bottom"
+        closeable
+        :style="{ height: '70%' }"
+      >
+        <goods-style
+          :list="newList"
+          :goodInfo="goodsInfo"
+        ></goods-style>
+      </van-popup>
     </div>
 
     <div class="third">
@@ -131,6 +162,10 @@
       class="desc"
     ></div>
 
+    <div>
+      <recommend></recommend>
+    </div>
+
     <van-action-bar>
       <van-action-bar-icon
         icon="shop-o"
@@ -144,11 +179,16 @@
       />
       <van-action-bar-button
         type="warning"
+        color="#E8E8E8"
         text="加入购物车"
+        style="color:black"
+         @click="showPopup2"
       />
       <van-action-bar-button
         type="danger"
+        color="#282828 "
         text="立即购买"
+         @click="showPopup2"
       />
     </van-action-bar>
 
@@ -161,12 +201,14 @@ import { defineComponent, reactive, toRefs, ref } from "vue";
 import xqaxios from "../utils/axios.js";
 import { newUrl } from "../utils/api.js";
 import axios from "axios";
-
+import GoodsStyle from "../components/goodsStyle.vue";
 import GoodsSwipe from "../components/GoodsSwipe.vue";
+import Recommend from "../components/Recommend.vue";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "GoodsInfo",
   props: ["id"],
-  components: { GoodsSwipe },
+  components: { GoodsSwipe, GoodsStyle, Recommend },
   setup(props: any, context) {
     const showShare = ref(false);
     const options = [
@@ -190,13 +232,23 @@ export default defineComponent({
       lunboList: [],
       smallList: [],
       bigList: [],
+      goodsList: [],
+      newList: [],
     });
     const getGoodsInfo = async () => {
       let result = await xqaxios("GET", newUrl + `${state.id}`);
       state.goodsInfo = result.message[0];
+      console.log(state.goodsInfo, "000000000000");
       state.lunboList = state.goodsInfo.pictures.split(",");
       state.smallList = state.goodsInfo.labelname.split(",");
+      state.goodsList = state.goodsInfo.style.split("&");
+      console.log(state.goodsList,"00000000000")
       state.bigList = state.goodsInfo.labeldesc.split("·");
+      for (let i = 0; i < state.goodsList.length; i++) {
+        // console.log(state.goodsList[i],"ccccccccccccccccccc");
+        state.newList.push(JSON.parse(state.goodsList[i]));
+        console.log(state.newList, "ppppppppppppppp");
+      }
     };
 
     getGoodsInfo();
@@ -204,13 +256,24 @@ export default defineComponent({
     const showPopup = () => {
       show.value = true;
     };
+    const show2 = ref(false);
+    const showPopup2 = () => {
+      show2.value = true;
+    };
     const closePopup = () => {
       show.value = false;
     };
     const onSelect = () => {
       showShare.value = false;
     };
+    const router=useRouter();
+    const onClickLeft=()=>{
+      router.go(-1)
+    }
 
+    const toHot=()=>{
+      router.push("/api/hot")
+    }
     // state.lunboList=state.goodsInfo.pictures.split(',');
     return {
       ...toRefs(state),
@@ -220,6 +283,9 @@ export default defineComponent({
       options,
       showShare,
       onSelect,
+      show2,
+      showPopup2,
+      onClickLeft,toHot
     };
   },
 });
@@ -227,7 +293,7 @@ export default defineComponent({
 
 <style scoped lang="less">
 /deep/.van-swipe__track {
-    padding-top: 46px;
+  padding-top: 46px;
 }
 .continer {
   padding-top: 0px;
@@ -297,7 +363,7 @@ export default defineComponent({
     background-color: #fff;
     .desc {
       position: absolute;
-      top: 615px;
+      top: 540px;
     }
   }
 
@@ -347,6 +413,39 @@ export default defineComponent({
 
   .big {
     height: 80px;
+
+    /deep/.van-grid {
+      height: 50px;
+      width: 160px;
+      overflow: hidden;
+    }
+    .box {
+      padding: 0;
+
+      .kuanshi {
+        padding-left: 40px;
+        display: flex;
+        /deep/.van-grid-item__content--center {
+          width: 50px;
+          padding: 10px;
+          /deep/img.van-image__img {
+            border-radius: 4px;
+          }
+        }
+        .sign {
+          padding-top: 10px;
+          padding-left: 10px;
+          .text {
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            color: #c0c0c0;
+            font-size: 12px;
+            height: 30px;
+            line-height: 30px;
+          }
+        }
+      }
+    }
   }
 
   .van-popup {

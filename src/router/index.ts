@@ -7,6 +7,14 @@ import GoodsInfo from '../views/GoodsInfo.vue'
 import Member from '../views/mine/member.vue'
 import Category from '../views/category/category.vue'
 import Search from '../views/search/search.vue'
+import Address from '../views/mine/Address.vue'
+import Register from '../views/login/Register.vue'
+import Message from '../views/mine/message.vue'
+import AddAddress from '../views/mine/AddAddress.vue'
+import EditAddress from '../views/mine/EditAddress.vue'
+import GoodsHot from '../views/Goods/GoodsHot.vue'
+import ConfirmOrder from '../views/Order/ConfirmOrder.vue'
+import myOrder from '../views/Order/myOrder.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -48,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
       showTabbar:false
     }
   },{
-    path:'/code',
+    path:'/code/:name',
     name:'Member',
     component:Member,
     meta:{
@@ -70,7 +78,73 @@ const routes: Array<RouteRecordRaw> = [
     meta:{
       showTabbar:false
     }
+  },{
+    path:'/api/address',
+    name:'Address',
+    props: true,
+    component:Address,
+    meta:{
+      showTabbar:false
+    }
+  },{
+    path:'/api/register',
+    name:'Register',
+    props: true,
+    component:Register,
+    meta:{
+      showTabbar:false
+    }
+  },{
+    path:'/api/message',
+    name:'Message',
+    props: true,
+    component:Message,
+    meta:{
+      showTabbar:false
+    }
+  },{
+    path:'/api/address/add',
+    name:'AddAddress',
+    props: true,
+    component:AddAddress,
+    meta:{
+      showTabbar:false
+    }
+  },{
+    path:'/api/address/edit/:id',
+    name:'EditAddress',
+    props: true,
+    component:EditAddress,
+    meta:{
+      showTabbar:false
+    }
+  },{
+    path:'/api/hot',
+    name:'GoodsHot',
+    props: true,
+    component:GoodsHot,
+    meta:{
+      showTabbar:false
+    }
+  },{
+    path:'/api/confirm',
+    name:'ConfirmOrder',
+    props: true,
+    component:ConfirmOrder,
+    meta:{
+      showTabbar:false
+    }
+  },{
+    path:'/api/order',
+    name:'myOrder',
+    props: true,
+    component:myOrder,
+    meta:{
+      showTabbar:false
+    }
   }
+  
+  
 ]
 
 const router = createRouter({

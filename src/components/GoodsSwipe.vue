@@ -2,7 +2,7 @@
   <div>
       <!-- 轮播图 -->
     <van-swipe
-      :autoplay="false"
+      :autoplay="3000"
       class="swipe"
     >
       <van-swipe-item

@@ -9,6 +9,7 @@
           v-model="state.userName"
           name="用户名"
           label="用户名"
+          placeholder="用户名"
           :rules="[{ required: true, message: '请填写用户名' }]"
         />
         <van-field
@@ -16,6 +17,7 @@
           type="password"
           name="密码"
           label="密码"
+          placeholder="密码"
           :rules="[{ required: true, message: '请填写密码' }]"
         />
         <div style="margin: 16px;">
@@ -27,6 +29,14 @@
             class="button"
             @click="onSubmit"
           >登录</van-button>
+          <van-button
+            round
+            block
+            type="info"
+            native-type="submit"
+            class="button"
+            :to="'/api/register'"
+          >注册</van-button>
         </div>
       </van-form>
 
@@ -36,64 +46,58 @@
 </template>
 
 <script>
-import { reactive,ref } from "vue";
-import xqaxios from '../../utils/axios.js'
-import checkUrl from '../../utils/api.js'
-import { Toast } from 'vant';
+import { reactive, ref } from "vue";
+import xqaxios from "../../utils/axios.js";
+import checkUrl from "../../utils/api.js";
+import { Toast } from "vant";
 export default {
   name: "Login",
-  setup(props,context) {
+  setup(props, context) {
     const state = reactive({
       userName: "",
       password: "",
-      list:{},
-      userList:[],
-      name:''
+      list: {},
+      userList: [],
+      name: "",
+      login: false,
     });
-
-    let isLogin=false;
-    let psTrue=false;
-     const checkOut=async ()=>{
-      let result = await xqaxios("GET", "/api/getcheck");
+    let psTrue = false;
+    const checkOut = async () => {
+      let result = await xqaxios("GET", "/api/login");
       state.userList = result.message;
-    }
+    };
 
     checkOut();
     const onSubmit = (values) => {
-       console.log("submit", values,"333333333333");
-       console.log(state.userList,'kkkkkkkkkk')
-      const isright=state.userList.find((item)=>{
-        if(item.userName==state.userName&&item.password==state.password){
-          
-            isLogin=true;
-            state.name=state.userName
-            return true;
-        }
-        else{
+      console.log("submit", values, "333333333333");
+      console.log(state.userList, "kkkkkkkkkk");
+      const isright = state.userList.find((item) => {
+        if (
+          item.userName == state.userName &&
+          item.password == state.password
+        ) {
+          let user = JSON.stringify(item);
+          sessionStorage.user = user;
+          sessionStorage.isLogin = true;
+          return true;
+        } else {
           return false;
         }
-      })
-       
-      psTrue=isright;
-      context.emit("func",isLogin,state.name);
-      if(psTrue){
-        Toast("登录成功")
-      }
-      else{
-        Toast("用户名或密码错误请重新输入！！")
-      }
-     
+      });
 
+      psTrue = isright;
+      context.emit("func", state.login, state.name);
+      if (psTrue) {
+        Toast("登录成功");
+        window.location.reload();
+      } else {
+        Toast("用户名或密码错误请重新输入！！");
+      }
     };
 
-   
     // const send=()=>{
-     
 
     // }
-
-    
-
 
     return {
       state,
@@ -116,20 +120,19 @@ export default {
       opacity: 0.7;
       position: relative;
       font-size: 20px !important;
-      top:200px;
+      top: 200px;
       .van-cell {
         line-height: 50px;
         height: 50px;
         margin-top: 30px;
         border-radius: 28px;
         width: 280px;
-        margin-left:45px;
-        .van-cell__title{
-            /deep/span{
-                font-size: 20px;
-            }
+        margin-left: 45px;
+        .van-cell__title {
+          /deep/span {
+            font-size: 20px;
+          }
         }
-        
       }
       .button {
         width: 200px;

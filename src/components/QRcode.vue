@@ -10,13 +10,15 @@ import QRcode from "qrcode";
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 export default defineComponent({
   name: "QRcode",
-  setup() {
+  props:['name'],
+  setup(props) {
     const state = {
       msg: "欢迎来到Cabana家具店",
       code: "",
     };
 
     const useqrcode = () => {
+      console.log(props.name,"cccccccccc")
       const canvas = document.getElementById("canvas");
       QRcode.toCanvas(
         canvas,

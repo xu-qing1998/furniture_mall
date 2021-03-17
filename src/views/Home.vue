@@ -22,8 +22,16 @@
         <img :src="item.image_url" />
       </van-swipe-item>
     </van-swipe> -->
+    
+    <div class="big">
+        <div class="middle">
+    <div v-for="item in iconList" :key="item.image_id" class="small" >
+        <img :src="item.image_url"/>
+    </div>
+    </div>
+    </div>
     <!-- <grid :gridList="gridList"></grid> -->
-
+    
     <!-- 新品上架和空行 -->
     <sign :generalList="generalList2"></sign>
 
@@ -117,9 +125,7 @@
     <grid :gridList="woodsList"></grid>
 
     <blank :blankList="blankList"></blank>
-    <div class="sign">
-      <img src="http://img01.yzcdn.cn/upload_files/2020/03/26/FjmpNjwRz8ue8REUSTEeDVVX8A83.jpg" />
-    </div>
+    
 
   </div>
 
@@ -163,6 +169,7 @@ export default defineComponent({
     Grid,
     Go,
     Title,
+  
   },
   setup() {
     const state = reactive({
@@ -335,6 +342,27 @@ export default defineComponent({
       width: 100%;
       height: 100%;
     }
+  }
+
+  .big{
+    margin-top:30px;
+    width:100%;
+    height:100px;
+    overflow-x: scroll;
+    .middle{
+      width:1200px;
+         .small{
+      width:80px;
+      height:80px;
+      display: inline-block;
+        img{
+          width:80px;
+          height:80px;
+        }
+    
+    }
+    }
+   
   }
 }
 </style>

@@ -5,7 +5,7 @@
       left-arrow
       @click-left="onClickLeft"
     />
-    <q-rcode></q-rcode>
+    <q-rcode :name="state.name"></q-rcode>
 
     
 
@@ -16,17 +16,21 @@
 import { useRouter } from "vue-router";
 import QRcode from "../../components/QRcode.vue";
 import Login from "../login/Login.vue"
-import { ref } from 'vue';
+import { ref,reactive } from 'vue';
 export default {
   name: "Member",
   components: { QRcode,Login },
-  setup() {
+  props:["name"],
+  setup(props) {
+    const state=reactive({
+      name:sessionStorage
+    })
     const router = useRouter();
     const onClickLeft = () => {
       router.push("/personal");
     };
 
-    return { onClickLeft };
+    return { onClickLeft ,state};
   },
 };
 </script>

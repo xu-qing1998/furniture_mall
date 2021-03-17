@@ -100,12 +100,12 @@ export default defineComponent({
       accessory: [
         { name: "玻璃器皿" },
         { name: "咖啡茶具" },
-        { name: "花瓶摆件" },
+        { name: "装饰画" },
+        { name: "花瓶" },
         { name: "餐盘刀叉" },
         { name: "靠垫毯子" },
         { name: "香氛" },
         { name: "镜子" },
-        { name: "装饰画" },
         { name: "洗浴用品" },
       ],
     });

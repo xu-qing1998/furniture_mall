@@ -4,6 +4,7 @@
       left-arrow
       placeholder="true"
     @click-left="onClickLeft"
+    safe-area-inset-top="true"
     >
       <template #title>
         {{name}}
@@ -60,7 +61,14 @@ const onRefresh = () => {
 </script>
 
 <style scoped lang="less">
+
+/deep/ .van-nav-bar {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+}
 .head {
+ 
   .foot {
     display: flex;
     flex-direction: column;

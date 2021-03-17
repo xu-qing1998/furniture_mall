@@ -1,175 +1,240 @@
 <template>
   <div class="vv">
-   
+
     <van-nav-bar
       title="个人中心"
       class="car"
       fixed="true"
     />
-     <div v-if="isLogin">
-    <div class="top">
-      <div class="avator">
-        <img src="https://img.yzcdn.cn/upload_files/2020/03/18/Fh621V9kuCPPuPUYHhN9Ktxs9DU7.jpg" />
-      </div>
-      <div class="name">{{username}}</div>
-      <div class="qr" @click="memberQd">
-        <img src="../assets/二维码.png">
-        <span>会员码</span>
-      </div>
-      <div class="card">
-        <div class="left">
-          <img src='../assets/钻石.png' />
-          <span>Cabana家具店</span>
+    <div v-if="isLogin">
+      <div class="top">
+        <div class="avator">
+          <img src="https://img.yzcdn.cn/upload_files/2020/03/18/Fh621V9kuCPPuPUYHhN9Ktxs9DU7.jpg" />
         </div>
-        <div class="right">
-          成为会员
-          <van-icon name="arrow" />
-        </div>
-      </div>
-    </div>
-
-    <div class="center">
-      <div class="grid">
-        <van-grid
-          :border="false"
-          :column-num="5"
+        <div class="name">{{username}}</div>
+        <div
+          class="qr"
+          @click="memberQd(username)"
         >
-          <van-grid-item>
-            <div>0.00</div>
-            <div>余额</div>
-          </van-grid-item>
-          <van-grid-item>
-            <div>0</div>
-            <div>积分</div>
-          </van-grid-item>
-          <van-grid-item>
-            <div>0</div>
-            <div>卡</div>
-          </van-grid-item>
-          <van-grid-item>
-            <div>0</div>
-            <div>优惠券</div>
-          </van-grid-item>
-          <van-grid-item>
-            <van-icon
-              name="gold-coin-o"
-              size="20"
-            />
-            <div>零钱</div>
-          </van-grid-item>
-        </van-grid>
-      </div>
-
-      <div class="order">
-        <div class="head">
-          <div class="left">我的订单</div>
-          <div class="right">查看全部订单
+          <img src="../assets/二维码.png">
+          <span>会员码</span>
+        </div>
+        <div class="card">
+          <div class="left">
+            <img src='../assets/钻石.png' />
+            <span>Cabana家具店</span>
+          </div>
+          <div class="right">
+            成为会员
             <van-icon name="arrow" />
           </div>
         </div>
-        <div class="main">
+      </div>
+
+      <div class="center">
+        <div class="grid">
           <van-grid
             :border="false"
             :column-num="5"
           >
-            <van-grid-item
-              icon="coupon"
-              text="待付款"
-            />
-            <van-grid-item
-              icon="invition"
-              text="待发货"
-            />
-            <van-grid-item
-              icon="send-gift"
-              text="待收货"
-            />
-            <van-grid-item
-              icon="chat"
-              text="评价"
-            />
-            <van-grid-item
-              icon="gold-coin"
-              text="退款售后"
-            />
+            <van-grid-item>
+              <div>0.00</div>
+              <div>余额</div>
+            </van-grid-item>
+            <van-grid-item>
+              <div>0</div>
+              <div>积分</div>
+            </van-grid-item>
+            <van-grid-item>
+              <div>0</div>
+              <div>卡</div>
+            </van-grid-item>
+            <van-grid-item>
+              <div>0</div>
+              <div>优惠券</div>
+            </van-grid-item>
+            <van-grid-item>
+              <van-icon
+                name="gold-coin-o"
+                size="20"
+              />
+              <div>零钱</div>
+            </van-grid-item>
           </van-grid>
         </div>
+
+        <div class="order">
+          <div class="head" @click="goOrder">
+            <div class="left" >我的订单</div>
+            <div class="right">查看全部订单
+              <van-icon name="arrow" />
+            </div>
+          </div>
+          <div class="main">
+            <van-grid
+              :border="false"
+              :column-num="5"
+            >
+              <van-grid-item
+                icon="coupon"
+                text="待付款"
+              />
+              <van-grid-item
+                icon="invition"
+                text="待发货"
+              />
+              <van-grid-item
+                icon="send-gift"
+                text="待收货"
+              />
+              <van-grid-item
+                icon="chat"
+                text="评价"
+              />
+              <van-grid-item
+                icon="gold-coin"
+                text="退款售后"
+              />
+            </van-grid>
+          </div>
+        </div>
+        <div class="third">
+          <van-cell
+            is-link
+            class="cell"
+            :to="'/car'"
+          >
+            <van-icon
+              name="cart-o"
+              size="20"
+            />
+            购物车
+          </van-cell>
+          <van-cell
+            is-link
+            class="cell"
+          >
+            <van-icon
+              name="gold-coin-o"
+              size="25"
+            />
+            返现
+          </van-cell>
+          <van-cell
+            is-link
+            class="cell"
+          >
+            <van-icon
+              name="bag-o"
+              size="25"
+            />
+            赠品
+          </van-cell>
+        </div>
+        <van-cell
+          is-link
+          class="cell"
+          :to="'/api/address'"
+        >
+
+          <van-icon
+            name="location-o"
+            size="25"
+          />
+          收货地址
+        </van-cell>
+        <van-cell
+          is-link
+          class="cell"
+          :to="'/api/message'"
+        >
+          <van-icon
+            name="user-o"
+            size="25"
+          />
+          个人信息
+        </van-cell>
+        <van-cell
+          is-link
+          class="cell"
+          @click="showPopup"
+        >
+          <van-icon
+            name="manager-o"
+            size="25"
+          />
+          账号设置
+        </van-cell>
+        <van-button  block @click="exit">退出登录</van-button>
       </div>
-      <div class="third">
-      <van-cell  is-link class="cell">
-        <van-icon name="cart-o" size="20" />
-        购物车
-      </van-cell>
-      <van-cell  is-link class="cell">
-        <van-icon name="gold-coin-o" size="25" />
-        返现
-      </van-cell>
-      <van-cell  is-link class="cell">
-        <van-icon name="bag-o" size="25" />
-        赠品
-      </van-cell>
     </div>
-    <van-cell  is-link class="cell">
-        
-      <van-icon name="location-o" size="25" />
-        收货地址
-      </van-cell>
-      <van-cell  is-link class="cell">
-      <van-icon  name="user-o" size="25" />
-        个人信息
-      </van-cell>
-      <van-cell  is-link class="cell"> 
-      <van-icon name="manager-o" size="25" />
-        账号设置
-      </van-cell>
-
-
-    </div>
-    </div>
-      <login v-if="!isLogin" :msg="isLogin" :name="name" @func="receiveFromChild"></login>
-
+    <login
+      v-if="!isLogin"
+      :msg="login"
+      :name="name"
+      @func="receiveFromChild"
+    ></login>
+    <!-- <login v-if="!isLogin" ></login> -->
     
   </div>
 
 </template>
 <script lang="ts">
-import { defineComponent,ref } from "vue";
-import {useRouter }  from "vue-router";
-import Login from './login/Login.vue'
+import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
+import Login from "./login/Login.vue";
 export default defineComponent({
   name: "Personal",
-  components:{Login},
-  setup(){
-    const router=useRouter();
-    const isLogin=ref(false);
-    const username=ref("");
+  components: { Login },
+  setup() {
+    const router = useRouter();
+    const isLogin = ref(false);
+    const username = ref("");
+    const show = ref(false);
 
-    const memberQd=()=>{
-        router.push("/code")
+    const memberQd = (name) => {
+      router.push(`/code/${name}`);
+    };
+
+    const showPopup = () => {
+      show.value = true;
+    };
+    const getmessage = () => {
+      if (sessionStorage.user) {
+        username.value = JSON.parse(sessionStorage.getItem("user")).userName;
+        console.log(username.value);
+        isLogin.value = JSON.parse(sessionStorage.getItem("isLogin"));
+      } else {
+        isLogin.value = false;
+      }
+    };
+
+    const receiveFromChild = (msg, name) => {
+      isLogin.value = JSON.parse(sessionStorage.getItem("isLogin"));
+    };
+
+    const exit=()=>{
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("isLogin");
+      window.location.reload();
     }
-
-    const receiveFromChild=(msg,name)=>{
-      isLogin.value=msg;
-      console.log(name);
-      username.value=name
-      console.log(username.value);
-      console.log(isLogin.value,'点击登录后')
-  
+    const goOrder=()=>{
+      router.push('/api/order')
     }
-
-    return {memberQd,isLogin,receiveFromChild,username}
-  }
+    getmessage();
+    return { memberQd, isLogin, username, receiveFromChild, show, showPopup ,exit,goOrder};
+  },
 });
 </script>
 
 
 <style scoped lang="less">
-.vv{
+.vv {
   padding-bottom: 50px;
 }
 .top {
-  position:absolute;
-   top: 46px;
+  position: absolute;
+  top: 46px;
   width: 355px;
   padding: 10px;
   height: 150px;
@@ -205,7 +270,7 @@ export default defineComponent({
     border-radius: 8px;
     font-size: 12px;
     width: 60px;
-    padding:0 5px;
+    padding: 0 5px;
     height: 20px;
     color: #fff;
     display: flex;
@@ -240,7 +305,6 @@ export default defineComponent({
   .grid {
     margin-top: 220px;
     border-radius: 8px;
-    
   }
   .order {
     margin-top: 10px;
@@ -262,15 +326,21 @@ export default defineComponent({
     }
   }
 
-  .third{
-    margin-top:10px;
-    padding:5px ;
+  .third {
+    margin-top: 10px;
+    padding: 5px;
     background-color: #fff;
-    .cell{
-      border-bottom:1px #f0f0f0 solid;
+    .cell {
+      border-bottom: 1px #f0f0f0 solid;
     }
-
-
   }
+}
+
+.van-button--default {
+    color: #fff;
+    margin-top:40px;
+    background-color: #383838;
+    border: 1px solid #ebedf0;
+    border-radius: 16px;
 }
 </style>
